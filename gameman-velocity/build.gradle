@@ -10,16 +10,24 @@ version = '1.0.0'
 repositories {
     mavenCentral()
     maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
     }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
+    compileOnly("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.2.0-SNAPSHOT")
+
+    implementation 'com.hashicorp.nomad:nomad-sdk:0.11.3.0'
+    implementation 'com.github.Revxrsal.Lamp:common:3.1.5'
+    implementation 'com.github.Revxrsal.Lamp:velocity:3.1.5'
+    implementation project(":gameman-api")
 }
 
-def targetJavaVersion = 8
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -38,4 +46,10 @@ tasks.withType(JavaCompile).configureEach {
 shadowJar {
     archiveBaseName.set("GameMan-Velocity")
     archiveClassifier.set("")
+}
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = "javac"
 }
