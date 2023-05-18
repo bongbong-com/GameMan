@@ -1,5 +1,6 @@
 package com.bongbong.cobl.gameman.velocity.nomad;
 
+import com.bongbong.cobl.gameman.velocity.GameManPlugin;
 import com.hashicorp.nomad.apimodel.*;
 import com.hashicorp.nomad.javasdk.NomadApiClient;
 import com.hashicorp.nomad.javasdk.NomadApiConfiguration;
@@ -23,11 +24,11 @@ public class NomadServerManager {
   private final Logger logger;
   private final ProxyServer proxy;
 
-  public NomadServerManager(ProxyServer proxy, Logger logger, String address) {
+  public NomadServerManager(GameManPlugin plugin, ProxyServer proxy, Logger logger, String address) {
     this.logger = logger;
     this.proxy = proxy;
     this.nomad = new NomadApiClient(new NomadApiConfiguration.Builder().setAddress(address).build());
-    proxy.getScheduler().buildTask(this, this::checkForServers).repeat(1, TimeUnit.SECONDS).schedule();
+    proxy.getScheduler().buildTask(plugin, this::checkForServers).repeat(1, TimeUnit.SECONDS).schedule();
   }
 
   public void checkForServers() {

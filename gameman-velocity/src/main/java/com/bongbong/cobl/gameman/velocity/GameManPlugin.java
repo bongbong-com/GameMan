@@ -25,7 +25,7 @@ public class GameManPlugin {
 
   @Subscribe
   public void onProxyInitialization(ProxyInitializeEvent event) {
-    this.nomadServerManager = new NomadServerManager(proxy, logger, System.getenv("NOMAD_API_ADDRESS"));
+    this.nomadServerManager = new NomadServerManager(this, proxy, logger, System.getenv("NOMAD_API_ADDRESS"));
     logger.info("Nomad polling has started...");
 
     logger.info("GameMan has started successfully!");
