@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group = 'com.bongbong.cobl'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:23.0.0'
+}
+
+def targetJavaVersion = 8
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+shadowJar {
+    archiveBaseName.set("GameMan-API")
+    archiveClassifier.set("")
+}
