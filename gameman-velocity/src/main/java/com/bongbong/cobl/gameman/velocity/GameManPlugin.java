@@ -1,5 +1,6 @@
 package com.bongbong.cobl.gameman.velocity;
 
+import com.bongbong.cobl.gameman.velocity.limbo.LimboJoinHandler;
 import com.bongbong.cobl.gameman.velocity.nomad.NomadServerManager;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
@@ -27,6 +28,9 @@ public class GameManPlugin {
   public void onProxyInitialization(ProxyInitializeEvent event) {
     this.nomadServerManager = new NomadServerManager(this, proxy, logger, System.getenv("NOMAD_API_ADDRESS"));
     logger.info("Nomad polling has started...");
+
+    proxy.getEventManager().register(new LimboJoinHandler(limboManager), this);
+    logger.info("Limbo handlers have been setup...");
 
     logger.info("GameMan has started successfully!");
   }

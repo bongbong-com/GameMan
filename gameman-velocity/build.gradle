@@ -25,6 +25,8 @@ dependencies {
     implementation 'com.github.Revxrsal.Lamp:common:3.1.5'
     implementation 'com.github.Revxrsal.Lamp:velocity:3.1.5'
     implementation project(":gameman-api")
+
+    compileOnly 'com.github.bongbong-com:LimboAPI:master-SNAPSHOT'
 }
 
 def targetJavaVersion = 17
