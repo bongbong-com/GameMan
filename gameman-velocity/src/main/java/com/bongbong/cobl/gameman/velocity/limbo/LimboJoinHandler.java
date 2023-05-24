@@ -19,6 +19,7 @@ public class LimboJoinHandler {
 
   @Subscribe
   public void onServerFind(PlayerChooseInitialServerEvent event) {
+    System.out.println("Test 1");
     proxy.getAllServers().stream().findAny().ifPresent(event::setInitialServer);
   }
 }
