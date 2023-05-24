@@ -1,7 +1,6 @@
 package com.bongbong.cobl.gameman.velocity.limbo;
 
-import com.velocitypowered.api.plugin.PluginContainer;
-import com.velocitypowered.api.proxy.ProxyServer;
+import lombok.Getter;
 import net.elytrium.limboapi.api.Limbo;
 import net.elytrium.limboapi.api.LimboFactory;
 import net.elytrium.limboapi.api.chunk.Dimension;
@@ -11,15 +10,15 @@ import net.elytrium.limboapi.api.player.GameMode;
 
 import java.io.IOException;
 
+@Getter
 public class LimboManager {
   private final LimboFactory factory;
-  private Limbo joinLimbo;
-  private VirtualWorld joinWorld;
+  private final Limbo joinLimbo;
 
-  public LimboManager(ProxyServer server) {
-    this.factory = (LimboFactory) server.getPluginManager().getPlugin("limboapi").flatMap(PluginContainer::getInstance).orElseThrow();
+  public LimboManager(Object limboPlugin) {
+    this.factory = (LimboFactory) limboPlugin;
 
-    this.joinWorld = this.factory.createVirtualWorld(Dimension.OVERWORLD, 0, 0, 0, 0, 0);
+    final VirtualWorld joinWorld = this.factory.createVirtualWorld(Dimension.OVERWORLD, 0, 0, 0, 0, 0);
     try {
       this.factory.openWorldFile(BuiltInWorldFileType.SCHEMATIC, getClass().getResourceAsStream("lobby.schem")).toWorld(factory, joinWorld, 0, 0, 0);
     } catch (IOException e) {
@@ -27,13 +26,5 @@ public class LimboManager {
     }
 
     this.joinLimbo = this.factory.createLimbo(joinWorld).setName("cobl.gg").setGameMode(GameMode.ADVENTURE);
-  }
-
-  public LimboFactory getFactory() {
-    return factory;
-  }
-
-  public Limbo getJoinLimbo() {
-    return joinLimbo;
   }
 }

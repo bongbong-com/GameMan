@@ -1,14 +1,12 @@
 package com.bongbong.cobl.gameman.velocity.limbo;
 
 import com.velocitypowered.api.event.Subscribe;
+import lombok.RequiredArgsConstructor;
 import net.elytrium.limboapi.api.event.LoginLimboRegisterEvent;
 
+@RequiredArgsConstructor
 public class LimboJoinHandler {
   private final LimboManager limboManager;
-
-  public LimboJoinHandler(LimboManager limboManager) {
-    this.limboManager = limboManager;
-  }
 
   @Subscribe
   public void onJoin(LoginLimboRegisterEvent event) {

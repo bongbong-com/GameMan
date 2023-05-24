@@ -27,6 +27,9 @@ dependencies {
     implementation project(":gameman-api")
 
     compileOnly 'com.github.bongbong-com:LimboAPI:master-SNAPSHOT'
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 def targetJavaVersion = 17
