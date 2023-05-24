@@ -35,6 +35,9 @@ public class NomadServerManager {
 
   public void checkForServers() {
     final List<String> current = proxy.getAllServers().stream().map(x -> x.getServerInfo().getName()).collect(Collectors.toList());
+
+    current.forEach(server -> logger.info("found! " + server));
+
     try {
       for (AllocationListStub alloc : nomad.getAllocationsApi().list().getValue()) {
         if (BIND_TO_JOBS.stream().noneMatch(job -> alloc.getJobId().contains(job))) {
