@@ -36,7 +36,8 @@ public class NomadServerManager {
   public void checkForServers() {
     final List<String> current = proxy.getAllServers().stream().map(x -> x.getServerInfo().getName()).collect(Collectors.toList());
 
-    current.forEach(server -> logger.info("found! " + server));
+    proxy.getAllServers().forEach(server ->
+            logger.info("found! " + server.getServerInfo().getAddress() + "(" + server.getServerInfo().getName() + ")"));
 
     try {
       for (AllocationListStub alloc : nomad.getAllocationsApi().list().getValue()) {
