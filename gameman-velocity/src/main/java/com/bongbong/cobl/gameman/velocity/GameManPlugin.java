@@ -1,6 +1,5 @@
 package com.bongbong.cobl.gameman.velocity;
 
-import com.bongbong.cobl.gameman.velocity.limbo.LimboJoinHandler;
 import com.bongbong.cobl.gameman.velocity.limbo.LimboManager;
 import com.bongbong.cobl.gameman.velocity.nomad.NomadServerManager;
 import com.bongbong.cobl.gameman.velocity.utils.Registrar;
@@ -10,7 +9,6 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
-import lombok.Getter;
 import net.elytrium.limboapi.api.LimboFactory;
 import org.slf4j.Logger;
 
@@ -35,7 +33,7 @@ public class GameManPlugin {
     Registrar registrar = new Registrar(proxy.getEventManager(), this);
 
     LimboFactory limboFactory = (LimboFactory) proxy.getPluginManager().getPlugin("limboapi").flatMap(PluginContainer::getInstance).orElseThrow();
-    new LimboManager(limboFactory, registrar);
+    new LimboManager(limboFactory, registrar, proxy);
 
     logger.info("Limbo handlers have been setup...");
 
