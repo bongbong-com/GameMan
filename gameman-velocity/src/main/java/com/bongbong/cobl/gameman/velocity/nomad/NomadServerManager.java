@@ -1,10 +1,7 @@
 package com.bongbong.cobl.gameman.velocity.nomad;
 
 import com.bongbong.cobl.gameman.velocity.GameManPlugin;
-import com.hashicorp.nomad.apimodel.Allocation;
-import com.hashicorp.nomad.apimodel.AllocationListStub;
-import com.hashicorp.nomad.apimodel.Job;
-import com.hashicorp.nomad.apimodel.NetworkResource;
+import com.hashicorp.nomad.apimodel.*;
 import com.hashicorp.nomad.javasdk.NomadApiClient;
 import com.hashicorp.nomad.javasdk.NomadApiConfiguration;
 import com.hashicorp.nomad.javasdk.NomadException;
@@ -44,6 +41,11 @@ public class NomadServerManager {
           continue;
         }
         final Allocation info = nomad.getAllocationsApi().info(alloc.getId()).getValue();
+        final Node node = nomad.getNodesApi().info(info.getNodeId()).getValue();
+        if (!node.getMeta().containsKey("local_ip")) {
+          logger.warn("Failed to find local IP of node: " + node.getId());
+          continue;
+        }
         final Job job;
         try {
           job = nomad.getJobsApi().info(info.getJobId()).getValue();
@@ -63,7 +65,7 @@ public class NomadServerManager {
           continue;
         }
 
-        final String ip = res.getIp();
+        final String ip = node.getMeta().get("local_ip"); //res.getIp();
         final int port = res.getDynamicPorts().get(0).getValue();
         final String serverId = meta.get("server-id");
         current.remove(serverId);
