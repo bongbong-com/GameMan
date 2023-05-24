@@ -10,6 +10,7 @@ import com.hashicorp.nomad.javasdk.NomadApiConfiguration;
 import com.hashicorp.nomad.javasdk.NomadException;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
+import lombok.Getter;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class NomadServerManager {
   private static final Set<String> BIND_TO_JOBS = Set.of("test_mc");
 
+  @Getter
   private final NomadApiClient nomad;
   private final Logger logger;
   private final ProxyServer proxy;
@@ -81,9 +83,5 @@ public class NomadServerManager {
     } catch (IOException | NomadException e) {
       logger.error("Failed nomad server check", e);
     }
-  }
-
-  public NomadApiClient getNomad() {
-    return nomad;
   }
 }
