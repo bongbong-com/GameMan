@@ -33,7 +33,7 @@ public class GameManPlugin {
     Registrar registrar = new Registrar(proxy.getEventManager(), this);
 
     LimboFactory limboFactory = (LimboFactory) proxy.getPluginManager().getPlugin("limboapi").flatMap(PluginContainer::getInstance).orElseThrow();
-    new LimboManager(limboFactory, registrar, proxy);
+    new LimboManager(limboFactory, registrar);
 
     logger.info("Limbo handlers have been setup...");
 
