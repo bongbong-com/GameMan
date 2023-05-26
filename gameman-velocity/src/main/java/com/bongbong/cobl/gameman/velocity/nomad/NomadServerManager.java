@@ -31,13 +31,11 @@ public class NomadServerManager {
     this.proxy = proxy;
     this.nomad = new NomadApiClient(new NomadApiConfiguration.Builder().setAddress(address).build());
     proxy.getScheduler().buildTask(plugin, this::checkForServers).repeat(1, TimeUnit.SECONDS).schedule();
+    proxy.getAllServers().forEach(server -> proxy.unregisterServer(server.getServerInfo()));
   }
 
   public void checkForServers() {
     final List<String> current = proxy.getAllServers().stream().map(x -> x.getServerInfo().getName()).collect(Collectors.toList());
-
-    proxy.getAllServers().forEach(server ->
-            logger.info("found! " + server.getServerInfo().getAddress() + "(" + server.getServerInfo().getName() + ")"));
 
     try {
       for (AllocationListStub alloc : nomad.getAllocationsApi().list().getValue()) {
