@@ -6,13 +6,14 @@ import com.bongbong.cobl.gameman.velocity.utils.Registrar;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.elytrium.limboapi.api.LimboFactory;
 import org.slf4j.Logger;
 
-@Plugin(id = "gameman", name = "GameMan", authors = {"cobl.gg"}, version = "1.0.0")
+@Plugin(id = "gameman", name = "GameMan", authors = {"cobl.gg"}, version = "1.0.0", dependencies = {@Dependency(id = "limboapi")})
 public class GameManPlugin {
   private final ProxyServer proxy;
   private final Logger logger;
