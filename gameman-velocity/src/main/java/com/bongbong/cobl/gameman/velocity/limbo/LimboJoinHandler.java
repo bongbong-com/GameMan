@@ -11,6 +11,7 @@ public class LimboJoinHandler {
 
   @Subscribe
   public void onJoin(LoginLimboRegisterEvent event) {
-    limboWorld.spawnPlayer(event.getPlayer(), new LimboSession());
+    System.out.println("limbo event called :)");
+    event.addOnJoinCallback(() -> limboWorld.spawnPlayer(event.getPlayer(), new LimboSession()));
   }
 }
