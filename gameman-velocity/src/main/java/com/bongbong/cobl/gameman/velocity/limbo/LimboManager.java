@@ -24,7 +24,7 @@ public class LimboManager {
       throw new RuntimeException(e);
     }
 
-    final Limbo joinLimbo = limboFactory.createLimbo(joinWorld).setName("cobl.gg").setWorldTime(1000L).setGameMode(GameMode.ADVENTURE);
+    final Limbo joinLimbo = limboFactory.createLimbo(joinWorld).setName("cobl.gg").setReducedDebugInfo(false).setWorldTime(1000L).setGameMode(GameMode.ADVENTURE).setShouldUpdateTags(false).setViewDistance(10).setSimulationDistance(9).setShouldRespawn(true).setShouldRejoin(true).setReadTimeout(5000).setMaxSuppressPacketLength(512);
 
     registrar.registerListener(new LimboJoinHandler(joinLimbo));
   }
