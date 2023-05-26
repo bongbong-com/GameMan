@@ -1,7 +1,7 @@
 package com.bongbong.cobl.gameman.velocity.limbo;
 
+import com.bongbong.cobl.gameman.velocity.utils.JARFiles;
 import com.bongbong.cobl.gameman.velocity.utils.Registrar;
-import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
 import net.elytrium.limboapi.api.Limbo;
 import net.elytrium.limboapi.api.LimboFactory;
@@ -15,17 +15,17 @@ import java.io.IOException;
 @Getter
 public class LimboManager {
 
-  public LimboManager(LimboFactory limboFactory, Registrar registrar, ProxyServer proxy) {
-    VirtualWorld joinWorld = limboFactory.createVirtualWorld(Dimension.OVERWORLD, 0, 0, 0, 0, 0);
+  public LimboManager(LimboFactory limboFactory, Registrar registrar) {
+    final VirtualWorld joinWorld = limboFactory.createVirtualWorld(Dimension.OVERWORLD, 2, 91, 1, 180, 0);
 
     try {
-      limboFactory.openWorldFile(BuiltInWorldFileType.SCHEMATIC, getClass().getResourceAsStream("lobby.schem")).toWorld(limboFactory, joinWorld, 0, 0, 0);
+      limboFactory.openWorldFile(BuiltInWorldFileType.STRUCTURE, JARFiles.getResource("world.nbt")).toWorld(limboFactory, joinWorld, 0, 90, 0, 15);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
 
-    Limbo joinLimbo = limboFactory.createLimbo(joinWorld).setName("cobl.gg").setGameMode(GameMode.ADVENTURE);
+    final Limbo joinLimbo = limboFactory.createLimbo(joinWorld).setName("cobl.gg").setWorldTime(1000L).setGameMode(GameMode.ADVENTURE);
 
-    registrar.registerListener(new LimboJoinHandler(joinLimbo, proxy));
+    registrar.registerListener(new LimboJoinHandler(joinLimbo));
   }
 }
